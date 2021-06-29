@@ -1,5 +1,10 @@
 {
-  "resource": "/",
-  "path": "/corpo-clinico",
-  "httpMethod": "GET"
+    "path": "/user",
+    "queryStringParameters": {
+        "personId": "fea87f39-e5e3-4d09-bf3c-5f8b2e3dca1d"
+    },
+    "headers": {
+
+    },
+    "body": "{\"id\": \"db0a6c92-b67b-4852-9289-b40de5ff0dea\",\"name\": \"Giovanni\",\"email\": \"giovannicuriel@gmail.com\",\"role\": {\"code\": 1234,\"name\": \"developer\"}}"
 }

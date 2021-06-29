@@ -1,31 +1,32 @@
 using Amazon.Lambda.Core;
+using Amazon.Lambda.APIGatewayEvents;
+using System.Text.Json;
+using user_registration.models;
+using serverless_sample.models;
 
 [assembly:LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 namespace AwsDotnetCsharp
 {
     public class Handler
     {
-       public Response Hello(Request request)
+       public string GetUser(APIGatewayProxyRequest request)
        {
-           return new Response("Go Serverless v1.0! Your function executed successfully!", request);
+           return "this is what you said: " + request.QueryStringParameters["personId"];
+        //    return new Response("Go Serverless v1.0! Your function executed successfully!", request);
        }
-    }
-
-    public class Response
-    {
-      public string Message {get; set;}
-      public Request Request {get; set;}
-
-      public Response(string message, Request request){
-        Message = message;
-        Request = request;
-      }
-    }
-
-    public class Request
-    {
-      public string Key1 {get; set;}
-      public string Key2 {get; set;}
-      public string Key3 {get; set;}
+       public string CreateUser(APIGatewayProxyRequest request)
+       {
+           Person person = JsonSerializer.Deserialize<Person>(request.Body);
+           using (var db = new UserContext()) {
+               db.Add(person);
+               db.SaveChanges();
+           }
+            return "Ok!";
+       }
+       public string DeleteUser(APIGatewayProxyRequest request)
+       {
+           return "this is what you said: " + request.QueryStringParameters["personId"];
+        //    return new Response("Go Serverless v1.0! Your function executed successfully!", request);
+       }
     }
 }
